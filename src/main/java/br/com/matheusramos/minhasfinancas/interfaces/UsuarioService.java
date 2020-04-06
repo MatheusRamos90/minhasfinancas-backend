@@ -1,5 +1,7 @@
 package br.com.matheusramos.minhasfinancas.interfaces;
 
+import java.util.Optional;
+
 import br.com.matheusramos.minhasfinancas.model.entity.Usuario;
 
 /**
@@ -13,4 +15,5 @@ public interface UsuarioService {
 	
 	void validarEmail(String email);
 	
+	Optional<Usuario> obterPorId(Long id);
 }
