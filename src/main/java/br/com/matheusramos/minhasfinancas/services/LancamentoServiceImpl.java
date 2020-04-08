@@ -69,7 +69,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 		atualizar(lancamento);
 	}
 
-	private void validar(Lancamento l) {
+	public void validar(Lancamento l) {
 		if (l.getDescricao() == null || l.getDescricao().trim().equals("")) {
 			throw new RegraNegocioException("Informe uma 'descrição' válida");
 		}
