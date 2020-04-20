@@ -69,6 +69,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 		atualizar(lancamento);
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	public void validar(Lancamento l) {
 		if (l.getDescricao() == null || l.getDescricao().trim().equals("")) {
 			throw new RegraNegocioException("Informe uma 'descrição' válida");
@@ -90,7 +91,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 			throw new RegraNegocioException("Informe um 'valor' válido");
 		}
 		
-		if (l.getTipo() == null) {
+		if (l.getTipo() == null || l.getTipo().equals("")) {
 			throw new RegraNegocioException("Informe um 'tipo de lançamento'");
 		}
 	}
@@ -102,8 +103,8 @@ public class LancamentoServiceImpl implements LancamentoService {
 
 	@Override
 	public BigDecimal obterSaldoPorUsuario(Long idUsuario) {
-		BigDecimal receitas = repository.obterSaldoPorTipoLancamentoEUsuario(idUsuario, EnumTipoLancamento.RECEITA);
-		BigDecimal despesas = repository.obterSaldoPorTipoLancamentoEUsuario(idUsuario, EnumTipoLancamento.DESPESA);
+		BigDecimal receitas = repository.obterSaldoPorTipoLancamentoEUsuarioEStatus(idUsuario, EnumTipoLancamento.RECEITA, EnumStatusLancamento.EFETIVADO);
+		BigDecimal despesas = repository.obterSaldoPorTipoLancamentoEUsuarioEStatus(idUsuario, EnumTipoLancamento.DESPESA, EnumStatusLancamento.EFETIVADO);
 		
 		if (receitas == null) {
 			receitas = BigDecimal.ZERO;

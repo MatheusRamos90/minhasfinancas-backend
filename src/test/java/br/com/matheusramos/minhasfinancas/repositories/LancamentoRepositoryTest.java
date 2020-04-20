@@ -21,16 +21,16 @@ import br.com.matheusramos.minhasfinancas.enums.EnumTipoLancamento;
 import br.com.matheusramos.minhasfinancas.model.entity.Lancamento;
 
 @ExtendWith(SpringExtension.class) // Extensão dada para uso do JUnit 5 em vez de @RunWith
-@ActiveProfiles("test")
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
+@ActiveProfiles("test")
 public class LancamentoRepositoryTest {
 
 	@Autowired
-	private LancamentoRepository repository;
+	LancamentoRepository repository;
 		
 	@Autowired
-	private static TestEntityManager em;
+	TestEntityManager em;
 	
 	@Test
 	public void salvarLancamento() {
@@ -44,7 +44,7 @@ public class LancamentoRepositoryTest {
 
 	@Test
 	public void deletarLancamento() {
-		Lancamento lancamento = criarEPersistirLancamento();
+		Lancamento lancamento = criarEPersistirUmLancamento();
 		
 		lancamento = em.find(Lancamento.class, lancamento.getId());
 		
@@ -57,7 +57,7 @@ public class LancamentoRepositoryTest {
 	
 	@Test
 	public void atualizarLancamento() {
-		Lancamento lancamento = criarEPersistirLancamento();
+		Lancamento lancamento = criarEPersistirUmLancamento();
 		
 		lancamento.setAno(2019);
 		lancamento.setDescricao("teste atualizar");
@@ -75,14 +75,14 @@ public class LancamentoRepositoryTest {
 	
 	@Test
 	public void buscarLancamentoPorId() {
-		Lancamento lancamento = criarEPersistirLancamento();
+		Lancamento lancamento = criarEPersistirUmLancamento();
 		
 		Optional<Lancamento> lancamentoEncontrado = repository.findById(lancamento.getId());
 		
 		assertThat(lancamentoEncontrado.isPresent()).isTrue();
 	}
 	
-	public static Lancamento criarEPersistirLancamento() {
+	private Lancamento criarEPersistirUmLancamento() {
 		Lancamento lancamento = criarLancamento();
 		em.persist(lancamento);
 		return lancamento;
